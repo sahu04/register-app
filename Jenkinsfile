@@ -37,22 +37,22 @@ pipeline {
             }
         }
 
-        // Uncomment the following stage if you want to run SonarQube Analysis
-        // stage("SonarQube Analysis") {
-        //     steps {
-        //         script {
-        //             withSonarQubeEnv(credentialsId: 'jenkins-sonarqube-token') { 
-        //                 sh "mvn sonar:sonar"
-        //             }
-        //         }	
-        //     }
-        // }
+        Uncomment the following stage if you want to run SonarQube Analysis
+        stage("SonarQube Analysis") {
+            steps {
+                script {
+                    withSonarQubeEnv(credentialsId: 'jenkins-sonar-token') { 
+                        sh "mvn sonar:sonar"
+                    }
+                }	
+            }
+        }
 
         // Uncomment the following stage if you want to wait for Quality Gate
         // stage("Quality Gate") {
         //     steps {
         //         script {
-        //             waitForQualityGate abortPipeline: false, credentialsId: 'jenkins-sonarqube-token'
+        //             waitForQualityGate abortPipeline: false, credentialsId: 'jenkins-sonar-token'
         //         }	
         //     }
         // }
