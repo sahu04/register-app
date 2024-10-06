@@ -37,7 +37,7 @@ pipeline {
             }
         }
 
-        # Uncomment the following stage if you want to run SonarQube Analysis
+        // SonarQube Analysis
         stage("SonarQube Analysis") {
             steps {
                 script {
@@ -48,7 +48,7 @@ pipeline {
             }
         }
 
-       # Uncomment the following stage if you want to wait for Quality Gate
+        // Quality Gate
         stage("Quality Gate") {
             steps {
                 script {
