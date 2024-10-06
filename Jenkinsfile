@@ -43,7 +43,12 @@ pipeline {
                 script {
                     withSonarQubeEnv(credentialsId: 'jenkins-sonar-token') { 
                         // sh "mvn sonar:sonar"
-                        bat '''mvn clean verify sonar:sonar -Dsonar.projectKey=jenkins-sonar -Dsonar.projectName='jenkins-sonar' -Dsonar.host.url=http://15.207.16.61:9000/''' //port 9000 is default for sonar
+                        sh '''
+                         mvn clean verify sonar:sonar \
+                         -Dsonar.projectKey=jenkins-sonar \
+                         -Dsonar.projectName='jenkins-sonar' \
+                         -Dsonar.host.url=http://15.207.16.61:9000/
+                        '''
                     }
                 }	
             }
