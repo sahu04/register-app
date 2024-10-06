@@ -48,14 +48,14 @@ pipeline {
             }
         }
 
-        // Uncomment the following stage if you want to wait for Quality Gate
-        // stage("Quality Gate") {
-        //     steps {
-        //         script {
-        //             waitForQualityGate abortPipeline: false, credentialsId: 'jenkins-sonar-token'
-        //         }	
-        //     }
-        // }
+        Uncomment the following stage if you want to wait for Quality Gate
+        stage("Quality Gate") {
+            steps {
+                script {
+                    waitForQualityGate abortPipeline: false, credentialsId: 'jenkins-sonar-token'
+                }	
+            }
+        }
 
         // Uncomment the following stage to build and push Docker Image
         // stage("Build & Push Docker Image") {
