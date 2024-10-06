@@ -2,7 +2,8 @@ pipeline {
     agent { label 'jenkins-agent' }
 
     // Define environment variables
-    // environment {
+     environment {
+           SONAR_TOKEN = credentials('jenkins-sonarqube-token1')
     //     APP_NAME = "register-app-pipeline"
     //     RELEASE = "1.0.0"
     //     DOCKER_USER = "ashfaque9x"
@@ -10,7 +11,7 @@ pipeline {
     //     IMAGE_NAME = "${DOCKER_USER}/${APP_NAME}"
     //     IMAGE_TAG = "${RELEASE}-${BUILD_NUMBER}"
     //     JENKINS_API_TOKEN = credentials("JENKINS_API_TOKEN")
-    // }
+     }
 
     stages {
         stage("Cleanup Workspace") {
@@ -48,7 +49,7 @@ pipeline {
                          -Dsonar.projectKey=jenkins-sonar \
                          -Dsonar.projectName='jenkins-sonar' \
                          -Dsonar.host.url=http://15.207.16.61:9000/
-                         -Dsonar.login=jenkins-sonarqube-token1
+                         -Dsonar.login=${SONAR_TOKEN}
                         '''
                     }
                 }	
