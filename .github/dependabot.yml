@@ -1,12 +1,12 @@
-# To get started with Dependabot version updates, you'll need to specify which
-# package ecosystems to update and where the package manifests are located.
-# Please see the documentation for all configuration options:
-# https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+name: Cache on Push
 
+on:
+  push:                          # Trigger the workflow on push events
+    branches:
+      - main                     # Specify the branch to trigger on
 
-version: 2
 jobs:
-  cache-test:
+  cache-dependencies:
     runs-on: ubuntu-latest
 
     steps:
@@ -16,34 +16,31 @@ jobs:
       - name: Set up Java JDK
         uses: actions/setup-java@v2
         with:
-          java-version: '11' # Specify the Java version you are using
+          java-version: '11'      # Specify the Java version you are using
 
       - name: Cache Maven dependencies
         uses: actions/cache@v2
         with:
-          path: ~/.m2/repository              # Path to Maven's local repository
-          key: maven-${{ runner.os }}-${{ hashFiles('**/pom.xml') }} # Cache key based on OS and pom.xml
+          path: ~/.m2/repository
+          key: maven-${{ runner.os }}-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             maven-${{ runner.os }}-
 
       - name: Cache Node.js modules
         uses: actions/cache@v2
         with:
-          path: ~/.npm                        # Path to the npm cache
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }} # Cache key based on OS and package-lock
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
 
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '16'                  # Specify the Node.js version you are using
+          node-version: '16'         # Specify the Node.js version you are using
 
       - name: Install Node.js dependencies
-        run: npm install                      # Command to install Node.js dependencies
+        run: npm install             # Command to install Node.js dependencies
 
-      - name: Verify Maven dependencies
-        run: mvn dependency:tree             # Command to check Maven dependencies
-
-      - name: Verify Node.js modules
-        run: npm list                         # Command to list 
+      - name: Build with Maven
+        run: mvn clean install       # Command to build the Maven project
